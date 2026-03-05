@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:microtap/app/features/home/pages/home_page.dart';
+import 'package:microtap/app/features/dashboard/pages/dashboard_page.dart';
+import 'package:microtap/app/ui/theme/app_theme.dart';
 import 'package:microtap/l10n/l10n.dart';
 
 class App extends StatelessWidget {
@@ -8,16 +9,11 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF2196F3),
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.darkTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const HomePage(),
+      home: const DashboardPage(),
     );
   }
 }
