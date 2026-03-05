@@ -18,23 +18,27 @@ class ServiceToggleCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        gradient: AppColors.cardGradient,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: isActive
               ? AppColors.primary.withValues(alpha: 0.5)
-              : Colors.transparent,
-          width: 2,
+              : Colors.white.withOpacity(0.05),
+          width: isActive ? 1.5 : 1,
         ),
-        boxShadow: isActive
-            ? [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.2),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                ),
-              ]
-            : null,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(isActive ? 0.3 : 0.2),
+            blurRadius: isActive ? 15 : 10,
+            offset: const Offset(0, 4),
+          ),
+          if (isActive)
+            BoxShadow(
+              color: AppColors.primary.withValues(alpha: 0.2),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
+            ),
+        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:microtap/app/features/dashboard/widgets/home_section.dart';
+import 'package:microtap/app/features/dashboard/widgets/microtap_logo.dart';
 import 'package:microtap/app/features/dashboard/widgets/saved_section.dart';
 import 'package:microtap/app/features/dashboard/widgets/settings_section.dart';
 import 'package:microtap/app/ui/colors.dart';
@@ -26,7 +27,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('microTAP Dashboard'),
+        title: const MicroTapLogo(size: 28),
+        centerTitle: false,
       ),
       body: IndexedStack(
         index: _selectedIndex,
