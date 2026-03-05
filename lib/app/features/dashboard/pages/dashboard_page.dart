@@ -1,29 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:microtap/app/features/dashboard/widgets/home_section.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:microtap/app/features/dashboard/cubit/dashboard_cubit.dart';
 import 'package:microtap/app/features/dashboard/widgets/microtap_logo.dart';
-import 'package:microtap/app/features/dashboard/widgets/saved_section.dart';
-import 'package:microtap/app/features/dashboard/widgets/settings_section.dart';
+import 'package:microtap/app/features/macros/pages/macros_page.dart';
+import 'package:microtap/app/features/saved/pages/saved_page.dart';
+import 'package:microtap/app/features/settings/pages/settings_page.dart';
 import 'package:microtap/app/ui/colors.dart';
 
-class DashboardPage extends StatefulWidget {
+class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => DashboardCubit(),
+      child: const _DashboardView(),
+    );
+  }
 }
 
-class _DashboardPageState extends State<DashboardPage> {
-  int _selectedIndex = 0;
+class _DashboardView extends StatelessWidget {
+  const _DashboardView();
 
-  final List<Widget> _sections = const [
-    HomeSection(),
-    SavedSection(),
-    SettingsSection(),
+  static const List<Widget> _pages = [
+    MacrosPage(),
+    SavedPage(),
+    SettingsPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final selectedIndex = context.watch<DashboardCubit>().state.selectedIndex;
 
     return Scaffold(
       appBar: AppBar(
@@ -31,8 +39,8 @@ class _DashboardPageState extends State<DashboardPage> {
         centerTitle: false,
       ),
       body: IndexedStack(
-        index: _selectedIndex,
-        children: _sections,
+        index: selectedIndex,
+        children: _pages,
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
@@ -41,8 +49,8 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ),
         child: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: (index) => setState(() => _selectedIndex = index),
+          currentIndex: selectedIndex,
+          onTap: context.read<DashboardCubit>().selectTab,
           backgroundColor: AppColors.background,
           selectedItemColor: AppColors.primary,
           unselectedItemColor: theme.colorScheme.onSurfaceVariant,
@@ -50,7 +58,7 @@ class _DashboardPageState extends State<DashboardPage> {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.dashboard_rounded),
-              label: 'Dashboard',
+              label: 'Macros',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.bookmark_rounded),

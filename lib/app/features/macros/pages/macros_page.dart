@@ -1,19 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:microtap/app/features/dashboard/widgets/configuration_section.dart';
-import 'package:microtap/app/features/dashboard/widgets/service_toggle_card.dart';
-import 'package:microtap/app/features/dashboard/widgets/settings_input.dart';
-import 'package:microtap/app/features/dashboard/widgets/settings_slider.dart';
+import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+import 'package:microtap/app/features/macros/widgets/configuration_section.dart';
+import 'package:microtap/app/features/macros/widgets/service_toggle_card.dart';
+import 'package:microtap/app/features/macros/widgets/settings_input.dart';
+import 'package:microtap/app/features/macros/widgets/settings_slider.dart';
 import 'package:microtap/app/ui/colors.dart';
 
-class HomeSection extends StatefulWidget {
-  const HomeSection({super.key});
+class MacrosPage extends StatefulWidget {
+  const MacrosPage({super.key});
 
   @override
-  State<HomeSection> createState() => _HomeSectionState();
+  State<MacrosPage> createState() => _MacrosPageState();
 }
 
-class _HomeSectionState extends State<HomeSection> {
+class _MacrosPageState extends State<MacrosPage> {
   bool _isServiceActive = false;
+
+  Future<void> _toggleService() async {
+    if (!_isServiceActive) {
+      final status = await FlutterOverlayWindow.isPermissionGranted();
+      if (!status) {
+        await FlutterOverlayWindow.requestPermission();
+        return;
+      }
+
+      await FlutterOverlayWindow.showOverlay(
+        enableDrag: true,
+        overlayTitle: 'microTAP Controller',
+        overlayContent: 'Automation active',
+        alignment: OverlayAlignment.centerLeft,
+        visibility: NotificationVisibility.visibilityPublic,
+        positionGravity: PositionGravity.auto,
+        height: WindowSize.matchParent,
+      );
+    } else {
+      await FlutterOverlayWindow.closeOverlay();
+    }
+
+    if (mounted) {
+      setState(() => _isServiceActive = !_isServiceActive);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +53,7 @@ class _HomeSectionState extends State<HomeSection> {
         children: [
           ServiceToggleCard(
             isActive: _isServiceActive,
-            onToggle: () =>
-                setState(() => _isServiceActive = !_isServiceActive),
+            onToggle: _toggleService,
           ),
           const SizedBox(height: 24),
           Text(
@@ -133,7 +159,7 @@ class _HomeSectionState extends State<HomeSection> {
               ),
             ],
           ),
-          const SizedBox(height: 100), // Extra space for bottom nav
+          const SizedBox(height: 100),
         ],
       ),
     );

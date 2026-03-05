@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:microtap/app/features/dashboard/widgets/settings_tile.dart';
+import 'package:microtap/app/features/settings/widgets/settings_tile.dart';
 
-class SettingsSection extends StatelessWidget {
-  const SettingsSection({super.key});
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {

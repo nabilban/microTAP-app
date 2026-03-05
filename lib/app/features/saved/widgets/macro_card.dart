@@ -25,10 +25,10 @@ class MacroCard extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: AppColors.cardGradient,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.05)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(alpha: 0.2),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -50,7 +50,7 @@ class MacroCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.timer_outlined,
                       size: 14,
                       color: AppColors.onSurfaceVariant,
@@ -63,7 +63,7 @@ class MacroCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Icon(
+                    const Icon(
                       Icons.calendar_today_outlined,
                       size: 14,
                       color: AppColors.onSurfaceVariant,
@@ -88,7 +88,7 @@ class MacroCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
+                  color: AppColors.primary.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(

@@ -35,7 +35,7 @@ class MicroTapLogo extends StatelessWidget {
         borderRadius: BorderRadius.circular(size * 0.25),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.5),
+            color: AppColors.primary.withValues(alpha: 0.5),
             blurRadius: 15,
             spreadRadius: 1,
           ),
